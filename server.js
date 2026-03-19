@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const path = require('path');
+const nodemailer = require('nodemailer');
 
 const app = express();
 
