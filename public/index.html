@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE QUARTER | Kigali · Residential Management & Luxury Concierge</title>
+  
+  <meta name="description" content="The Quarter provides discreet, bespoke residential management and luxury concierge services in Kigali, Rwanda. Serving discerning residences.">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <!-- intl-tel-input CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css">
+  
+  <style>
+    :root {
+      --bg-deep: #0c1318;
+      --accent-gold: #c5a059;
+      --text-light: #ffffff;
+      --text-muted: #a0b3bd;
+      --border-light: rgba(212, 182, 138, 0.2);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background-color: var(--bg-deep); color: var(--text-light); line-height: 1.6; overflow-x: hidden; }
+
+    h1, h2, h3 { font-family: 'Playfair Display', serif; text-transform: uppercase; letter-spacing: 2px; font-weight: 400; }
+
+    .navbar { padding: 1.5rem 8%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; background: rgba(12,19,24,0.95); z-index: 1000; backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-light); }
+    .logo { font-size: 1.5rem; letter-spacing: 4px; color: var(--accent-gold); text-decoration: none; }
+    
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a { color: var(--text-light); text-decoration: none; font-size: 0.8rem; letter-spacing: 2px; margin-left: 2.5rem; transition: color 0.3s; }
+    .nav-links a:hover { color: var(--accent-gold); }
+
+    .menu-toggle { display: none; cursor: pointer; z-index: 1001; }
+    .bar { display: block; width: 25px; height: 1px; margin: 6px auto; transition: all 0.3s ease; background-color: var(--accent-gold); }
+
+    .hero { 
+      min-height: 85vh; 
+      display: flex; flex-direction: column; align-items: center; justify-content: center; 
+      text-align: center; padding: 0 8%; 
+      background: linear-gradient(rgba(12,19,24,0.8), rgba(12,19,24,0.8)), 
+                  url('https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover;
+    }
+    .hero h1 { font-size: 4.5rem; margin-bottom: 1rem; letter-spacing: 6px; }
+    .hero p { font-size: 1.2rem; color: var(--text-muted); max-width: 650px; margin-bottom: 3rem; font-weight: 300; }
+
+    .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; background: #000; }
+    .pillar-card { 
+      padding: 6rem 10%; 
+      background-position: center; background-size: cover; 
+      transition: 0.6s ease-in-out; position: relative; overflow: hidden;
+    }
+    
+    .pillar-card.visitors { 
+      background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), 
+        url('https://images.unsplash.com/photo-1523805009345-7448845a9e53?ixlib=rb-4.0.3&auto=format&fit=crop&w=2072&q=80'); 
+    }
+    .pillar-card.residents { 
+      background-image: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.95)), 
+        url('https://images.unsplash.com/photo-1600607686527-6fb886090705?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80'); 
+    }
+    
+    .pillar-card:hover { transform: scale(1.01); }
+    .pillar-card h2 { margin-bottom: 0.5rem; color: var(--accent-gold); font-size: 2rem; }
+    .pillar-card .subhead { color: var(--text-muted); font-style: italic; margin-bottom: 2.5rem; font-size: 0.95rem; border-bottom: 1px solid var(--border-light); padding-bottom: 1rem; display: inline-block;}
+
+    .service-list { margin: 2rem 0; text-align: left; max-width: 450px; margin-left: auto; margin-right: auto; }
+    .service-item { display: flex; align-items: flex-start; gap: 1.2rem; margin-bottom: 1.5rem; color: var(--text-muted); font-weight: 300; }
+    .service-item i { color: var(--accent-gold); width: 1.2rem; margin-top: 0.3rem; font-size: 1rem; }
+    .service-item span { flex: 1; line-height: 1.5; }
+    .service-desc { display: block; font-size: 0.85rem; color: var(--text-muted); opacity: 0.7; margin-top: 2px; font-style: italic; }
+
+    .experience-tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 2.5rem 0; justify-content: center; max-width: 400px; margin-left: auto; margin-right: auto; }
+    .tag { border: 1px solid var(--border-light); padding: 0.5rem 1.2rem; font-size: 0.75rem; color: var(--text-muted); border-radius: 30px; text-transform: uppercase; letter-spacing: 1px; }
+
+    .btn { display: inline-block; padding: 16px 45px; border: 1px solid var(--accent-gold); color: var(--accent-gold); text-decoration: none; text-transform: uppercase; letter-spacing: 2px; font-size: 0.8rem; transition: 0.4s; background: transparent; cursor: pointer; position: relative; z-index: 1; overflow: hidden; }
+    .btn:hover { color: var(--bg-deep); }
+    .btn::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 0%; background: var(--accent-gold); transition: 0.4s; z-index: -1; }
+    .btn:hover::after { height: 100%; }
+    .btn-full { width: 100%; text-align: center; }
+
+    .process { padding: 80px 8%; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--border-light); }
+    .process-header { text-align: center; margin-bottom: 4rem; }
+    .process-header h2 { color: var(--accent-gold); font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .process-header p { color: var(--text-muted); font-size: 1.1rem; }
+    .process-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem; }
+    .step { text-align: center; }
+    .step h3 { color: var(--accent-gold); margin-bottom: 1rem; font-size: 1.4rem; }
+    .step p { color: var(--text-muted); line-height: 1.6; }
+
+    .vendor-block { display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; background: linear-gradient(rgba(12,19,24,0.9), rgba(12,19,24,0.95)); }
+    .vendor-content { padding: 8rem 10% 8rem 15%; }
+    .vendor-content h2 { color: var(--accent-gold); margin-bottom: 1.5rem; font-size: 2.2rem; }
+    .vendor-content p { color: var(--text-muted); margin-bottom: 2rem; font-weight: 300; font-size: 1.05rem; }
+    .vendor-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 3rem; }
+    .vendor-item { display: flex; align-items: center; gap: 0.8rem; color: var(--text-muted); font-weight: 300; }
+    .vendor-item i { color: var(--accent-gold); font-size: 0.9rem; }
+    .vendor-image { 
+      background: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80') center/cover; 
+      min-height: 400px; 
+    }
+
+    .gallery-section {
+      padding: 80px 8%;
+      background: rgba(0,0,0,0.2);
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .gallery-header h2 {
+      color: var(--accent-gold);
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .gallery-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery-item {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      transition: transform 0.3s, box-shadow 0.3s;
+      aspect-ratio: 4/3;
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    #contact { padding: 100px 8%; background: #000; }
+    .consultation-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 5rem; background: rgba(255,255,255,0.01); border: 1px solid var(--border-light); padding: 5rem; }
+    .consultation-left h2 { color: var(--accent-gold); margin-bottom: 1.5rem; font-size: 2.2rem; }
+    .consultation-left p { color: var(--text-muted); margin-bottom: 2rem; font-weight: 300; }
+    .consultation-left .note { color: var(--accent-gold); font-size: 0.9rem; border-left: 2px solid var(--accent-gold); padding-left: 1.5rem; margin-top: 3rem; font-style: italic; }
+
+    .consultation-form input, .consultation-form select, .consultation-form textarea {
+      width: 100%; padding: 1.2rem; margin-bottom: 1.2rem; background: rgba(255,255,255,0.03); border: 1px solid var(--border-light); color: var(--text-light); font-family: 'Inter', sans-serif; font-size: 0.95rem; 
+    }
+    .consultation-form input:focus, .consultation-form select:focus, .consultation-form textarea:focus { outline: none; border-color: var(--accent-gold); background: rgba(255,255,255,0.05); }
+
+    /* Phone input styling */
+    .iti { width: 100%; margin-bottom: 1.2rem; }
+    .iti__selected-flag { background: transparent !important; }
+    .iti__country-list { background: #1c2a33; border-color: var(--border-light); color: white; }
+    .iti__country.iti__highlight { background: rgba(197,160,89,0.2); }
+    .iti__country-name, .iti__dial-code { color: white; }
+
+    .btn-full { width: 100%; text-align: center; margin-top: 1rem; }
+
+    .success-message {
+      background: rgba(37, 211, 102, 0.1);
+      border: 1px solid #25D366;
+      color: #25D366;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .success-message.show { display: block; }
+
+    footer { padding: 5rem 8%; text-align: center; border-top: 1px solid var(--border-light); color: var(--text-muted); font-size: 0.8rem; background: var(--bg-deep); }
+    .footer-links { display: flex; gap: 2.5rem; justify-content: center; margin: 2.5rem 0; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 1px; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--accent-gold); }
+
+    @media (max-width: 992px) {
+      .hero h1 { font-size: 3.5rem; }
+      .pillars, .consultation-grid, .vendor-block, .process-steps { grid-template-columns: 1fr; }
+      .consultation-grid { padding: 3rem; gap: 3rem; }
+    }
+    @media (max-width: 768px) {
+      .menu-toggle { display: block; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; width: 100%; background-color: rgba(12,19,24,0.98); border-bottom: 1px solid var(--border-light); padding: 3rem 0; text-align: center; backdrop-filter: blur(15px); }
+      .nav-links.active { display: flex; }
+      .nav-links a { margin: 1.2rem 0; font-size: 1.1rem; margin-left: 0; }
+      .vendor-block { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#" class="logo">THE QUARTER</a>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </div>
+    <div class="nav-links">
+      <a href="#services">SERVICES</a>
+      <a href="#process">HOW IT WORKS</a>
+      <a href="#vendor">NETWORK</a>
+      <a href="#gallery">GALLERY</a>
+      <a href="#contact">CONTACT</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <h1>LIFE, HANDLED.</h1>
+    <p>Discreet, bespoke residential management and concierge services in Kigali.</p>
+    <a href="#services" class="btn">Discover Our Services</a>
+  </header>
+
+  <section class="pillars" id="services">
+    <div class="pillar-card visitors">
+      <h2>Experience Rwanda</h2>
+      <div class="subhead">For visitors & international arrivals</div>
+      <div class="service-list">
+        <div class="service-item"><i class="fas fa-plane"></i><span>Airport Transfer & Meet <span class="service-desc">Seamless arrival with executive transport.</span></span></div>
+        <div class="service-item"><i class="fas fa-car"></i><span>Private Car Service <span class="service-desc">Chauffeur-driven vehicles for your stay.</span></span></div>
+        <div class="service-item"><i class="fas fa-building"></i><span>Accommodation Booking <span class="service-desc">Curated hotels, villas, and Airbnbs.</span></span></div>
+        <div class="service-item"><i class="fas fa-shopping-basket"></i><span>Pre-Arrival Provisioning <span class="service-desc">Meticulously stocked larder and fridge before you arrive.</span></span></div>
+        <div class="service-item"><i class="fas fa-utensils"></i><span>Restaurant Reservations <span class="service-desc">Access to Kigali's finest dining.</span></span></div>
+      </div>
+      <div class="experience-tags">
+        <span class="tag">Gorilla trekking</span><span class="tag">Lake Muhazi</span><span class="tag">Lake Kivu</span><span class="tag">Canopy walks</span>
+      </div>
+      <a href="#contact" class="btn">Plan Your Journey</a>
+    </div>
+
+    <div class="pillar-card residents">
+      <h2>Embrace Kigali Life</h2>
+      <div class="subhead">For Rwanda-based residents</div>
+      <div class="service-list">
+        <div class="service-item"><i class="fas fa-shopping-basket"></i><span>Grocery Shopping and Delivery <span class="service-desc">Fresh produce and household essentials.</span></span></div>
+        <div class="service-item"><i class="fas fa-broom"></i><span>Housekeeping <span class="service-desc">Hospitality-grade cleaning and care.</span></span></div>
+        <div class="service-item"><i class="fas fa-tools"></i><span>Property Maintenance <span class="service-desc">Supervised plumbers, electricians, and gardeners.</span></span></div>
+        <div class="service-item"><i class="fas fa-calendar-check"></i><span>Event Planning & Bespoke Culinary Hosting <span class="service-desc">Intimate gatherings and private chef experiences.</span></span></div>
+        <div class="service-item"><i class="fas fa-glass-cheers"></i><span>After-Event Cleanup <span class="service-desc">Post-celebration restoration and deep cleaning.</span></span></div>
+        <div class="service-item"><i class="fas fa-tshirt"></i><span>Personal Shopping <span class="service-desc">Gifts, fashion, and personal appointments.</span></span></div>
+        <div class="service-item"><i class="fas fa-truck-moving"></i><span>Relocation Services <span class="service-desc">Home setup, utility connections, and moving logistics.</span></span></div>
+      </div>
+      <a href="#contact" class="btn">Simplify Your Living</a>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="process-header">
+      <h2>How It Works</h2>
+      <p>Simple. Structured. Confidential.</p>
+    </div>
+    <div class="process-steps">
+      <div class="step"><h3>01 Consultation</h3><p>We understand your requirements through a detailed private discussion.</p></div>
+      <div class="step"><h3>02 Coordination</h3><p>We activate our trusted network and oversee every detail.</p></div>
+      <div class="step"><h3>03 Execution</h3><p>Seamless delivery with ongoing updates and documentation.</p></div>
+    </div>
+  </section>
+
+  <section class="vendor-block" id="vendor">
+    <div class="vendor-content">
+      <h2>Vendor Network & Supervision</h2>
+      <p>We maintain a rigorously vetted network of tradespeople. Every provider is supervised and bound by our strict confidentiality standards to ensure your home remains a private sanctuary.</p>
+      <p style="color: var(--accent-gold); margin-top: 1rem;">Clients receive documented service summaries and professional oversight for complete peace of mind.</p>
+      <div class="vendor-grid">
+        <div class="vendor-item"><i class="fas fa-check-circle"></i> Licensed electricians</div>
+        <div class="vendor-item"><i class="fas fa-check-circle"></i> Certified plumbers</div>
+        <div class="vendor-item"><i class="fas fa-check-circle"></i> Professional cleaners</div>
+        <div class="vendor-item"><i class="fas fa-check-circle"></i> Private chefs & caterers</div>
+        <div class="vendor-item"><i class="fas fa-check-circle"></i> Security consultants</div>
+        <div class="vendor-item"><i class="fas fa-check-circle"></i> Gardening crews</div>
+      </div>
+    </div>
+    <div class="vendor-image"></div>
+  </section>
+
+  <!-- Gallery Section (12 generic images) -->
+  <section class="gallery-section" id="gallery">
+    <div class="gallery-header">
+      <h2>Moments from The Quarter</h2>
+      <p>A visual journey through our services, trusted network, and the beauty of Kigali.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Luxury resort" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Concierge service" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Gorilla trekking" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Luxury pool" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1602002418816-5c0aeef426aa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1974&q=80" alt="Private chef" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Luxury hotel room" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Airport transfer" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1551632436-cbf8dd35adfa?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80" alt="Maintenance service" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2073&q=80" alt="Luxury living room" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1540541338287-41700207dee6?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Spa treatment" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1533779283484-8ad4940aa3a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80" alt="Wine tasting" loading="lazy"></div>
+      <div class="gallery-item"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80" alt="Kigali hills" loading="lazy"></div>
+    </div>
+  </section>
+
+  <!-- Consultation Section (UPDATED FORM) -->
+  <section id="contact">
+    <div class="consultation-grid">
+      <div class="consultation-left">
+        <h2>Private Consultation</h2>
+        <p>Discuss your specific needs. We work with a limited number of residences to ensure dedicated attention.</p>
+        <p><i class="fas fa-lock" style="color:var(--accent-gold);"></i> All discussions confidential</p>
+        <div class="note">Same-day response guaranteed for all enquiries.</div>
+      </div>
+      <div class="consultation-form">
+        <div class="success-message" id="successMessage">
+          ✓ Request sent! We'll contact you shortly.
+        </div>
+        
+        <form id="consultationForm">
+          <input type="text" id="fullName" placeholder="Full name" required>
+          <input type="email" id="email" placeholder="Email address" required>
+          
+          <!-- Phone input with country flags (intl-tel-input) -->
+          <input type="tel" id="phone" class="form-control" placeholder="Phone number" required>
+          
+          <select id="service" required>
+            <option value="" disabled selected>Select a service</option>
+            <optgroup label="✨ Experience Rwanda">
+              <option>Gorilla trekking</option>
+              <option>Lake Kivu tours</option>
+              <option>Airport transfers</option>
+              <option>Accommodation booking</option>
+              <option>Private car service</option>
+              <option>Pre-arrival provisioning</option>
+              <option>Restaurant reservations</option>
+              <option>Canopy walks</option>
+              <option>Lake Muhazi visits</option>
+            </optgroup>
+            <optgroup label="🏡 Embrace Kigali Life">
+              <option>Grocery shopping and delivery</option>
+              <option>Housekeeping</option>
+              <option>Property maintenance</option>
+              <option>Event planning</option>
+              <option>Bespoke culinary hosting</option>
+              <option>After-event cleanup</option>
+              <option>Personal shopping</option>
+              <option>Relocation services</option>
+            </optgroup>
+          </select>
+          
+          <textarea id="moreInfo" placeholder="Additional information (optional)" rows="4"></textarea>
+          
+          <button type="submit" class="btn btn-full" id="submitBtn">SUBMIT REQUEST</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>©️ 2026 The Quarter. Serving Kigali's most discerning residences.</p>
+    <div class="footer-links">
+      <a href="#">PRIVACY POLICY</a>
+      <a href="#">TERMS OF SERVICE</a>
+      <a href="#">SERVICE AGREEMENT</a>
+    </div>
+    <p style="margin-top: 1rem; color: var(--text-light); opacity: 0.8;">Nyarutarama · +250 788 556 176 · concierge@thequarter.rw</p>
+  </footer>
+
+  <!-- intl-tel-input JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('mobile-menu');
+    const navLinks = document.querySelector('.nav-links');
+    menuToggle.addEventListener('click', () => navLinks.classList.toggle('active'));
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => navLinks.classList.remove('active'));
+    });
+
+    // Initialize phone input with flags
+    const phoneInput = document.querySelector("#phone");
+    const iti = window.intlTelInput(phoneInput, {
+      initialCountry: "rw",
+      separateDialCode: true,
+      utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+    });
+
+    // Form submission
+    const form = document.getElementById('consultationForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const successMsg = document.getElementById('successMessage');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'SENDING...';
+      
+      const fullName = document.getElementById('fullName').value;
+      const email = document.getElementById('email').value;
+      const phone = iti.getNumber(); // Gets full international number
+      const service = document.getElementById('service').value;
+      const moreInfo = document.getElementById('moreInfo').value;
+      
+      try {
+        const response = await fetch('/api/submit-request', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            fullName, 
+            email, 
+            phone, 
+            service,
+            moreInfo 
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          successMsg.classList.add('show');
+          form.reset();
+          iti.setNumber(''); // Clear phone
+          setTimeout(() => successMsg.classList.remove('show'), 5000);
+        } else {
+          alert('Error: ' + data.message);
+        }
+      } catch (error) {
+        console.error('Submission error:', error);
+        alert('Network error. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'SUBMIT REQUEST';
+      }
+    });
+  </script>
+</body>
+</html>

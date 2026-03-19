@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE QUARTER | Admin Dashboard</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0c1318;
+      color: #ffffff;
+      min-height: 100vh;
+    }
+    .login-container {
+      max-width: 400px;
+      margin: 100px auto;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,182,138,0.2);
+      border-radius: 20px;
+      padding: 40px;
+    }
+    .login-container h2 {
+      color: #c5a059;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+    .login-container input {
+      width: 100%;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(212,182,138,0.2);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+    }
+    .login-container button {
+      width: 100%;
+      padding: 15px;
+      background: #c5a059;
+      border: none;
+      border-radius: 8px;
+      color: #0c1318;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .login-container button:hover { background: #d4b07a; }
+    .error { color: #ff6b6b; margin-bottom: 20px; text-align: center; }
+
+    .dashboard { display: none; }
+    .header {
+      background: #0c1318;
+      border-bottom: 1px solid rgba(212,182,138,0.2);
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .header h1 {
+      color: #c5a059;
+      font-size: 1.5rem;
+      letter-spacing: 2px;
+    }
+    .logout {
+      background: transparent;
+      border: 1px solid #c5a059;
+      color: #c5a059;
+      padding: 10px 25px;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .logout:hover {
+      background: #c5a059;
+      color: #0c1318;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 40px 5%;
+    }
+    .stat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(212,182,138,0.2);
+      border-radius: 15px;
+      padding: 25px;
+    }
+    .stat-card h3 { color: #a0b3bd; font-size: 0.9rem; margin-bottom: 10px; }
+    .stat-card .number { color: #c5a059; font-size: 2.5rem; font-weight: 600; }
+    .requests-table {
+      padding: 0 5% 50px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: rgba(255,255,255,0.02);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+    th {
+      background: rgba(197,160,89,0.1);
+      color: #c5a059;
+      padding: 15px;
+      text-align: left;
+      font-weight: 500;
+    }
+    td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(212,182,138,0.1);
+      color: #ffffff;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+    .status-new { background: rgba(197,160,89,0.2); color: #c5a059; }
+    .status-contacted { background: rgba(37,211,102,0.2); color: #25D366; }
+    .status-completed { background: rgba(255,255,255,0.1); color: #a0b3bd; }
+    .action-btn {
+      background: transparent;
+      border: 1px solid #c5a059;
+      color: #c5a059;
+      padding: 5px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      margin-right: 5px;
+    }
+    .action-btn:hover { background: #c5a059; color: #0c1318; }
+    .loading { text-align: center; padding: 50px; color: #a0b3bd; }
+  </style>
+</head>
+<body>
+  <!-- Login Form -->
+  <div class="login-container" id="loginForm">
+    <h2>ADMIN LOGIN</h2>
+    <div class="error" id="loginError"></div>
+    <input type="text" id="username" placeholder="Username" value="admin">
+    <input type="password" id="password" placeholder="Password" value="admin123">
+    <button onclick="login()">SIGN IN</button>
+  </div>
+
+  <!-- Dashboard (hidden until login) -->
+  <div class="dashboard" id="dashboard">
+    <div class="header">
+      <h1>THE QUARTER · ADMIN</h1>
+      <button class="logout" onclick="logout()">SIGN OUT</button>
+    </div>
+    
+    <div class="stats" id="stats">
+      <!-- Filled by JavaScript -->
+    </div>
+    
+    <div class="requests-table">
+      <h3 style="color:#c5a059; margin-bottom:20px;">Recent Requests</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Contact</th>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="requestsBody">
+          <tr><td colspan="6" class="loading">Loading requests...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- WhatsApp Reply Modal -->
+  <div id="whatsappModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:#1c2a33; padding:30px; border-radius:15px; border:1px solid #c5a059; z-index:1000; width:90%; max-width:500px;">
+    <h3 style="color:#c5a059; margin-bottom:20px;">Reply via WhatsApp</h3>
+    <p id="replyClientInfo" style="color:#a0b3bd; margin-bottom:15px;"></p>
+    <textarea id="replyMessage" rows="4" style="width:100%; padding:15px; background:#0c1318; border:1px solid rgba(212,182,138,0.2); border-radius:8px; color:white; margin-bottom:20px;" placeholder="Type your message...">Thank you for your request. We'll get back to you shortly.</textarea>
+    <div style="display:flex; gap:10px;">
+      <button onclick="sendWhatsAppReply()" style="flex:1; background:#25D366; border:none; padding:12px; border-radius:8px; color:#0c1318; font-weight:600; cursor:pointer;">Send via WhatsApp</button>
+      <button onclick="closeModal()" style="flex:1; background:transparent; border:1px solid #a0b3bd; padding:12px; border-radius:8px; color:#a0b3bd; cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+  <div id="modalOverlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:999;" onclick="closeModal()"></div>
+
+  <script>
+    let token = localStorage.getItem('token');
+    let currentRequestId = null;
+    let currentPhone = null;
+
+    // Check if already logged in
+    if (token) {
+      document.getElementById('loginForm').style.display = 'none';
+      document.getElementById('dashboard').style.display = 'block';
+      loadRequests();
+    }
+
+    async function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      try {
+        const response = await fetch('/api/admin/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success) {
+          token = data.token;
+          localStorage.setItem('token', token);
+          document.getElementById('loginForm').style.display = 'none';
+          document.getElementById('dashboard').style.display = 'block';
+          loadRequests();
+        } else {
+          document.getElementById('loginError').textContent = 'Invalid credentials';
+        }
+      } catch (error) {
+        document.getElementById('loginError').textContent = 'Connection error';
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem('token');
+      window.location.reload();
+    }
+
+    async function loadRequests() {
+      try {
+        const response = await fetch('/api/admin/requests', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await response.json();
+        
+        if (data.success) {
+          displayRequests(data.requests);
+          updateStats(data.requests);
+        }
+      } catch (error) {
+        console.error('Error loading requests:', error);
+      }
+    }
+
+    function displayRequests(requests) {
+      const tbody = document.getElementById('requestsBody');
+      if (requests.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:40px;">No requests yet</td></tr>';
+        return;
+      }
+      
+      tbody.innerHTML = requests.map(req => `
+        <tr>
+          <td>${new Date(req.createdAt).toLocaleDateString()}</td>
+          <td>${req.fullName}</td>
+          <td>
+            <div>${req.email}</div>
+            <div style="color:#c5a059; font-size:0.9rem;">${req.phone}</div>
+          </td>
+          <td>${req.service}</td>
+          <td><span class="status-badge status-${req.status}">${req.status}</span></td>
+          <td>
+            <button class="action-btn" onclick="openWhatsAppModal('${req._id}', '${req.phone}', '${req.fullName}')"><i class="fab fa-whatsapp"></i> Reply</button>
+            <button class="action-btn" onclick="updateStatus('${req._id}', 'contacted')">✓ Contacted</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateStats(requests) {
+      const total = requests.length;
+      const newCount = requests.filter(r => r.status === 'new').length;
+      const contacted = requests.filter(r => r.status === 'contacted').length;
+      
+      document.getElementById('stats').innerHTML = `
+        <div class="stat-card"><h3>TOTAL REQUESTS</h3><div class="number">${total}</div></div>
+        <div class="stat-card"><h3>NEW</h3><div class="number">${newCount}</div></div>
+        <div class="stat-card"><h3>CONTACTED</h3><div class="number">${contacted}</div></div>
+      `;
+    }
+
+    async function updateStatus(id, status) {
+      try {
+        await fetch(`/api/admin/requests/${id}`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ status })
+        });
+        loadRequests();
+      } catch (error) {
+        console.error('Error updating status:', error);
+      }
+    }
+
+    function openWhatsAppModal(requestId, phone, name) {
+      currentRequestId = requestId;
+      currentPhone = phone;
+      document.getElementById('replyClientInfo').innerHTML = `Replying to: <strong>${name}</strong> (${phone})`;
+      document.getElementById('whatsappModal').style.display = 'block';
+      document.getElementById('modalOverlay').style.display = 'block';
+    }
+
+    async function sendWhatsAppReply() {
+      const message = document.getElementById('replyMessage').value;
+      
+      try {
+        await fetch('/api/admin/whatsapp-reply', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            to: currentPhone,
+            message,
+            requestId: currentRequestId
+          })
+        });
+        
+        await updateStatus(currentRequestId, 'contacted');
+        closeModal();
+        alert('WhatsApp message sent (simulated)');
+      } catch (error) {
+        console.error('Error sending WhatsApp:', error);
+        alert('Failed to send message');
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('whatsappModal').style.display = 'none';
+      document.getElementById('modalOverlay').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

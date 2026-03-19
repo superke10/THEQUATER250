@@ -1,0 +1,16 @@
+the-quarter-backend/
+├── server.js                 # Main Express server
+├── package.json              # Dependencies
+├── .env                      # Environment variables (create this)
+├── models/
+│   ├── Request.js            # Service request schema
+│   └── Admin.js              # Admin user schema
+├── routes/
+│   ├── requests.js           # API endpoints for requests
+│   └── admin.js              # Admin authentication & dashboard API
+├── middleware/
+│   └── auth.js                # JWT verification middleware
+├── public/                    # Your frontend website
+│   └── index.html             # Your existing HTML (modified version below)
+└── admin/                     # Admin dashboard
+    └── dashboard.html          # Admin login & requests view
