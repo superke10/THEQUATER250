@@ -27,7 +27,7 @@ transporter.verify((error, success) => {
 // Submit new service request
 router.post('/submit-request', async (req, res) => {
   try {
-    const { fullName, email, phone, service } = req.body;
+    const { fullName, email, phone, service, moreInfo } = req.body;
     
     // Validate required fields
     if (!fullName || !email || !phone || !service) {
@@ -42,7 +42,8 @@ router.post('/submit-request', async (req, res) => {
       fullName,
       email,
       phone,
-      service
+      service,
+      notes: moreInfo || ''
     });
     
     await newRequest.save();
@@ -62,6 +63,7 @@ router.post('/submit-request', async (req, res) => {
             <p style="margin: 10px 0;"><strong style="color: #c5a059;">Email:</strong> ${email}</p>
             <p style="margin: 10px 0;"><strong style="color: #c5a059;">Phone:</strong> ${phone}</p>
             <p style="margin: 10px 0;"><strong style="color: #c5a059;">Service:</strong> ${service}</p>
+            ${moreInfo ? `<p style="margin: 10px 0;"><strong style="color: #c5a059;">Additional Information:</strong> ${moreInfo}</p>` : ''}
           </div>
           
           <p style="color: #a0b3bd; font-size: 14px;">Login to admin dashboard to view all requests and reply via WhatsApp.</p>
